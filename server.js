@@ -5,7 +5,7 @@ const colors = require("colors");
 const errorHandler = require("./middleware/error");
 const connectDB = require("./config/db");
 
-//Load
+//Load config
 dotenv.config({ path: "./config/config.env" });
 
 //conect to Database
@@ -16,18 +16,11 @@ const bootcamps = require("./routes/bootcamps");
 
 const app = express();
 
-//Body parser
-app.use(express.json());
+if (process.env.NODE_ENV === "development") app.use(morgan("dev")); //dev logging middleware
 
-//dev logging middleware
-if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
-
-//mount routers
-app.use("/api/v1/bootcamps", bootcamps);
-
-//error handler
-
-app.use(errorHandler);
+app.use(express.json()); //Body parser
+app.use("/api/v1/bootcamps", bootcamps); //mount routers
+app.use(errorHandler); //error handler
 
 const PORT = process.env.PORT || 5000;
 
