@@ -3,12 +3,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
 
-  error.message = err.message;
-
-  // //log to console for dev
-  // console.log("====================================");
-  // console.log(typeof err, "err");
-  // console.log("====================================");
+  error.message = { ...err.message };
 
   //mongoose bad objectID
   if (err.name === "CastError") {
@@ -24,7 +19,17 @@ const errorHandler = (err, req, res, next) => {
 
   // Mongoose validation error
   if (err.name === "ValidationError") {
-    const message = Object.values(err.errors).map(val => val.message);
+    const message = Object.entries(err.errors).map(entry => {
+      let key = entry[0];
+      let value = entry[1].message;
+      return {
+        [key]: value
+      };
+    });
+
+    console.log("====================================");
+    console.log(message);
+    console.log("====================================");
 
     error = new ErrorResponse(message, 400);
   }
