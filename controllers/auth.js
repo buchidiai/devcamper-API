@@ -16,8 +16,6 @@ exports.register = asyncHandler(async (req, res, next) => {
     role
   });
 
-  const token = user.getSignedJwtToken();
-
   sendTokenResponse(user, 200, res);
 });
 
@@ -46,10 +44,6 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
 
-  //create token
-
-  const token = user.getSignedJwtToken();
-
   sendTokenResponse(user, 200, res);
 });
 
@@ -69,6 +63,8 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
   const token = user.getSignedJwtToken();
+
+  console.log(token, "sendTokenResponse");
 
   const options = {
     expires: new Date(
