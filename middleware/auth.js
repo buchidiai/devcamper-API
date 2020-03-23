@@ -16,11 +16,9 @@ exports.protect = asyncHandler(async (req, res, next) => {
   // Make sure token exists
   if (!token) {
     return next(
-      new ErrorResponse("Not authorized to access this route a", 401)
+      new ErrorResponse("Not authorized to access this route no token", 401)
     );
   }
-
-  console.log(token, "token before decode");
 
   try {
     // Verify token
@@ -32,7 +30,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     next();
   } catch (err) {
     return next(
-      new ErrorResponse("Not authorized to access this route b", 401)
+      new ErrorResponse("Not authorized to access this route verify token", 401)
     );
   }
 });
