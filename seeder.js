@@ -45,7 +45,6 @@ const importData = async () => {
     await User.create(users);
     await Review.create(reviews);
 
-
     console.log("Data Imported...".green.inverse);
     process.exit();
   } catch (err) {
@@ -59,6 +58,7 @@ const deleteData = async () => {
     await Bootcamp.deleteMany();
     await Course.deleteMany();
     await User.deleteMany();
+    await Review.deleteMany();
 
     console.log("Data Destroyed...".red.inverse);
     process.exit();

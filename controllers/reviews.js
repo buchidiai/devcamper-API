@@ -46,15 +46,8 @@ exports.getReview = asyncHandler(async (req, res, next) => {
 // @route     POST /api/v1/bootcamps/:bootcampId/reviews
 // @access    Private
 exports.addReview = asyncHandler(async (req, res, next) => {
-  console.log(
-    req.body.bootcamp,
-    req.params.bootcampId,
-    "req.body.bootcamp, eq.params.bootcampId 1"
-  );
-
-  console.log((req.body.user, req.user.id), "req.body.user = req.user.id 2");
-
   req.body.bootcamp = req.params.bootcampId;
+
   req.body.user = req.user.id;
 
   const bootcamp = await Bootcamp.findById(req.params.bootcampId);
